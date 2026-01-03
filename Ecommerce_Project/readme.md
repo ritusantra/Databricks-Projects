@@ -17,7 +17,9 @@ Steps:
 4. Build analytics ready tables in the gold layer
 5. Build a dashboard based on the data from gold layer
 
+<img width="1439" height="686" alt="image" src="https://github.com/user-attachments/assets/daee4beb-bb47-4697-bbb9-b679d2e47fee" />
 
+<img width="1355" height="460" alt="image" src="https://github.com/user-attachments/assets/46453a53-5e2f-4512-bb63-a425269a6f87" />
 
 ------------------
 

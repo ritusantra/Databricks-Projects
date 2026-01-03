@@ -19,10 +19,7 @@ Steps:
 
 
 
-
-
-
-
+------------------
 
 # E-commerce Data Engineering Project using Databricks
 
@@ -42,3 +39,21 @@ Designed and implemented an end-to-end ETL pipeline for e-commerce sales transac
 - Built analytics-ready fact and dimension tables in the Gold layer  
 - Designed a dashboard using Gold-layer data for business reporting and insights  
 
+--------
+
+# E-commerce Data Engineering Project using Databricks
+
+Built a production-style data engineering pipeline for e-commerce sales transaction data using Databricks, implementing the Medallion Architecture (Bronze, Silver, and Gold layers) to support scalable data ingestion, transformation, and business analytics.
+
+## Architecture & Tools
+- Ingested raw e-commerce transaction data in CSV format from on-premise/local sources into Databricks Volumes  
+- Designed and managed a centralized data catalog with Bronze, Silver, and Gold schemas using Databricks SQL  
+- Implemented ETL pipelines and data transformations using PySpark for performance and scalability  
+- Utilized Databricks Genie to analyze key business metrics and uncover actionable insights  
+- Developed interactive, business-facing dashboards using Databricks’ built-in Dashboard capabilities  
+
+## Implementation Workflow
+- Loaded raw CSV data into the Bronze layer for reliable raw data storage and traceability  
+- Performed data quality checks, cleansing, and standardization in the Silver layer  
+- Created analytics-ready fact and dimension tables in the Gold layer to support reporting and decision-making  
+- Delivered end-to-end dashboards powered by Gold-layer data for executive and operational insights  

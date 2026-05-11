@@ -20,7 +20,7 @@ def create_silver_schema(spark):
     spark.sql('''
               CREATE SCHEMA IF NOT EXISTS sales_catalog.silver
             ''')
-    logger.info('silver schema created successfully.')
+    logger.info('Silver schema created successfully.')
 
 
 def create_silver_tables(spark):

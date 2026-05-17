@@ -304,7 +304,7 @@ def main():
         # Get or create a spark session
         spark = SparkSession.builder.appName('Silver Layer').getOrCreate()
 
-        # Execute the bronze layer creation steps
+        # Execute the silver layer creation steps
         create_silver_schema(spark)
         create_silver_tables(spark)
         load_silver_data(spark)

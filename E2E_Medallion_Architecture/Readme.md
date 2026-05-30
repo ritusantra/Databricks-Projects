@@ -66,19 +66,16 @@ This project implements a data lakehouse using Medallion Architecture (bronze, s
 
 ---
 
-## 📊 BI Dashboard (Work in Progress)
+## 📊 BI Dashboard
 
-- Developed an interactive analytics dashboard using Databricks SQL
+- Developed a sales analysis dashboard using Databricks SQL
 - Created visualizations and KPI metrics including:
   - Total Sales
   - Total Orders
   - Top-Selling Products
-  - Customer Segmentation
-  - Regional Sales Analysis
-- Enabled drill-down capabilities across customer, product, and geographic dimensions
-- Designed dashboards to support business insights and decision-making
+  - Yearly Quantity Trends
 
----
+![image_1780111373754.png](./image_1780111373754.png "image_1780111373754.png")
 
-## 🔢 Data Source Reference
+
 

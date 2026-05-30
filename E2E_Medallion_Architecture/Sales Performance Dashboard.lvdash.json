@@ -1,0 +1,584 @@
+{
+  "datasets": [
+    {
+      "name": "3bfbd819",
+      "displayName": "Quantity by Country",
+      "queryLines": [
+        "select c.country, sum(s.quantity) as total_quantity\r\n",
+        "from fact_sales s\r\n",
+        "inner join dim_customers c \r\n",
+        "on s.customer_key = c.customer_id\r\n",
+        "group by c.country\r\n",
+        "order by sum(s.quantity) desc;"
+      ],
+      "catalog": "sales_catalog",
+      "schema": "gold"
+    },
+    {
+      "name": "d677ba98",
+      "displayName": "fact_sales",
+      "config": {
+        "version": "1.1",
+        "source": "sales_catalog.gold.fact_sales",
+        "dimensions": [
+          {
+            "name": "order_number",
+            "expr": "source.order_number",
+            "displayName": "Order Number"
+          },
+          {
+            "name": "product_key",
+            "expr": "source.product_key",
+            "displayName": "Product Key"
+          },
+          {
+            "name": "customer_key",
+            "expr": "source.customer_key",
+            "displayName": "Customer Key"
+          },
+          {
+            "name": "order_date",
+            "expr": "source.order_date",
+            "displayName": "Order Date"
+          },
+          {
+            "name": "shipping_date",
+            "expr": "source.shipping_date",
+            "displayName": "Shipping Date"
+          },
+          {
+            "name": "due_date",
+            "expr": "source.due_date",
+            "displayName": "Due Date"
+          },
+          {
+            "name": "sales_amount",
+            "expr": "source.sales_amount",
+            "displayName": "Sales Amount"
+          },
+          {
+            "name": "quantity",
+            "expr": "source.quantity",
+            "displayName": "Quantity"
+          },
+          {
+            "name": "price",
+            "expr": "source.price",
+            "displayName": "Price"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "92852eb8",
+      "displayName": "kpis",
+      "queryLines": [
+        "select count(distinct order_number) as total_orders,\r\n",
+        "sum(sales_amount) as total_sales,\r\n",
+        "sum(quantity) as total_qty \r\n",
+        "from fact_sales; "
+      ],
+      "catalog": "sales_catalog",
+      "schema": "gold"
+    },
+    {
+      "name": "top_products",
+      "displayName": "Top 10 Products by Sales",
+      "queryLines": [
+        "SELECT\n",
+        "  p.product_name,\n",
+        "  SUM(s.sales_amount) as total_sales\n",
+        "FROM\n",
+        "  sales_catalog.gold.fact_sales s\n",
+        "    INNER JOIN sales_catalog.gold.dim_products p\n",
+        "      ON s.product_key = p.product_key\n",
+        "GROUP BY\n",
+        "  p.product_name\n",
+        "ORDER BY\n",
+        "  total_sales DESC\n",
+        "LIMIT 10"
+      ],
+      "catalog": "sales_catalog",
+      "schema": "gold"
+    },
+    {
+      "name": "f3d29856",
+      "displayName": "sales",
+      "queryLines": [
+        "select \r\n",
+        "  c.country,\r\n",
+        "  count(distinct c.customer_id) as total_customers,\r\n",
+        "  sum(fsd.quantity) as total_quantity,\r\n",
+        "  sum(fsd.sales_amount) as total_sales,\r\n",
+        "  count(fsd.order_number) as number_of_orders\r\n",
+        "from sales_catalog.gold.dim_customers c\r\n",
+        "join sales_catalog.gold.fact_sales fsd\r\n",
+        "  on c.customer_key = fsd.customer_key\r\n",
+        "group by c.country"
+      ],
+      "catalog": "sales_catalog",
+      "schema": "gold"
+    },
+    {
+      "name": "73b751d2",
+      "displayName": "cust_seg",
+      "queryLines": [
+        "with v as (\r\n",
+        "  SELECT \r\n",
+        "    c.custmer_number, \r\n",
+        "    sum(f.quantity) as total_qty\r\n",
+        "  FROM sales_catalog.gold.fact_sales f\r\n",
+        "  INNER JOIN sales_catalog.gold.dim_customers c\r\n",
+        "    ON f.customer_key = c.customer_key\r\n",
+        "  GROUP BY c.custmer_number\r\n",
+        ")\r\n",
+        "select \r\n",
+        "  custmer_number, total_qty,\r\n",
+        "  case \r\n",
+        "    when total_qty > 40 then 'Tier-1'\r\n",
+        "    when total_qty >= 20 and total_qty <= 40 then 'Tier-2'\r\n",
+        "    when total_qty < 20 then 'Tier-3'\r\n",
+        "  end as cust_tier\r\n",
+        "from v "
+      ],
+      "catalog": "sales_catalog",
+      "schema": "gold"
+    },
+    {
+      "name": "2bd5a1cf",
+      "displayName": "qty_trends",
+      "queryLines": [
+        "select \r\n",
+        "  year(order_date) as order_year, \r\n",
+        "  sum(quantity) as total_quantity\r\n",
+        "from sales_catalog.gold.fact_sales\r\n",
+        "where order_date is not null\r\n",
+        "group by year(order_date);"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "8957378b",
+      "displayName": "Dashboard",
+      "layout": [
+        {
+          "widget": {
+            "name": "d86d85c8",
+            "multilineTextboxSpec": {
+              "lines": [
+                "## Sales Performance Dashboard\n",
+                "\n",
+                "This dashboard provides an unified view of sales performance across countries, products, and regions. Global stakeholders can leverage these insights to inform strategic decision-making and drive business growth."
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "total",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "92852eb8",
+                  "fields": [
+                    {
+                      "name": "total_orders",
+                      "expression": "`total_orders`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Total Orders"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "total_orders"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 4,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "695e2ea9",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "92852eb8",
+                  "fields": [
+                    {
+                      "name": "total_qty",
+                      "expression": "`total_qty`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Total Quantity"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "total_qty"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 2,
+            "width": 4,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "9a4c9f41",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "92852eb8",
+                  "fields": [
+                    {
+                      "name": "total_sales",
+                      "expression": "`total_sales`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Total Sales"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "total_sales"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 2,
+            "width": 4,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "3644214e",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "top_products",
+                  "fields": [
+                    {
+                      "name": "product_name",
+                      "expression": "`product_name`"
+                    },
+                    {
+                      "name": "total_sales",
+                      "expression": "`total_sales`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Top 10 Products by Sales"
+              },
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "product_name"
+                  },
+                  {
+                    "fieldName": "total_sales"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 4,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "sales-an",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "f3d29856",
+                  "fields": [
+                    {
+                      "name": "country",
+                      "expression": "`country`"
+                    },
+                    {
+                      "name": "total_sales",
+                      "expression": "`total_sales`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showDescription": false,
+                "showTitle": true,
+                "title": "Sales by Country"
+              },
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  }
+                ]
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "country",
+                  "axis": {
+                    "hideTitle": true
+                  },
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "y-reversed"
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "total_sales",
+                  "axis": {
+                    "hideTitle": true,
+                    "hideLabels": true,
+                    "hideGrid": true
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 4,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "quant",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "2bd5a1cf",
+                  "fields": [
+                    {
+                      "name": "order_year",
+                      "expression": "`order_year`"
+                    },
+                    {
+                      "name": "total_quantity",
+                      "expression": "`total_quantity`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Yearly Quantity Trends"
+              },
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  }
+                ],
+                "linePatterns": [
+                  "solid"
+                ]
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "order_year",
+                  "displayName": "Year",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "total_quantity",
+                  "displayName": "Total Quantity",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 11,
+            "width": 12,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "canvasBackgroundColor": {
+        "light": "#FFFFFF",
+        "dark": "#000000"
+      },
+      "widgetBackgroundColor": {
+        "light": "#FFFFFF",
+        "dark": "#000000"
+      },
+      "widgetBorderColor": {
+        "light": "#000000",
+        "dark": "#00FF00"
+      },
+      "fontColor": {
+        "light": "#000000",
+        "dark": "#00FF00"
+      },
+      "selectionColor": {
+        "light": "#FF00FF",
+        "dark": "#FFFFFF"
+      },
+      "visualizationColors": [
+        "#EE7733",
+        "#0077BB",
+        "#33BBEE",
+        "#EE3377",
+        "#CC3311",
+        "#009988",
+        "#BBBBBB"
+      ],
+      "widgetHeaderAlignment": "LEFT"
+    },
+    "applyModeEnabled": false
+  }
+}

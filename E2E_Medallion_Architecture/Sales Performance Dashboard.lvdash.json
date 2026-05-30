@@ -175,9 +175,7 @@
             "name": "d86d85c8",
             "multilineTextboxSpec": {
               "lines": [
-                "## Sales Performance Dashboard\n",
-                "\n",
-                "This dashboard provides an unified view of sales performance across countries, products, and regions. Global stakeholders can leverage these insights to inform strategic decision-making and drive business growth."
+                "## Sales Performance Dashboard"
               ]
             }
           },
@@ -185,7 +183,7 @@
             "x": 0,
             "y": 0,
             "width": 12,
-            "height": 2
+            "height": 1
           }
         },
         {
@@ -222,7 +220,7 @@
           },
           "position": {
             "x": 0,
-            "y": 2,
+            "y": 1,
             "width": 4,
             "height": 2
           }
@@ -261,7 +259,7 @@
           },
           "position": {
             "x": 4,
-            "y": 2,
+            "y": 1,
             "width": 4,
             "height": 2
           }
@@ -300,7 +298,7 @@
           },
           "position": {
             "x": 8,
-            "y": 2,
+            "y": 1,
             "width": 4,
             "height": 2
           }
@@ -348,7 +346,7 @@
           },
           "position": {
             "x": 0,
-            "y": 4,
+            "y": 3,
             "width": 6,
             "height": 7
           }
@@ -447,7 +445,7 @@
           },
           "position": {
             "x": 6,
-            "y": 4,
+            "y": 3,
             "width": 6,
             "height": 7
           }
@@ -536,7 +534,7 @@
           },
           "position": {
             "x": 0,
-            "y": 11,
+            "y": 10,
             "width": 12,
             "height": 6
           }

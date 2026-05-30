@@ -75,7 +75,7 @@ This project implements a data lakehouse using Medallion Architecture (bronze, s
   - Top-Selling Products
   - Yearly Quantity Trends
 
-![image_1780111373754.png](./image_1780111373754.png "image_1780111373754.png")
+![image_1780111671780.png](./image_1780111671780.png "image_1780111671780.png")
 
 
 

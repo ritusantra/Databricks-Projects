@@ -6,6 +6,7 @@ This project implements a scalable Ecommerce Orders Analytics Pipeline using the
 
 
 ## Architecture 
+<img width="1212" height="531" alt="image" src="https://github.com/user-attachments/assets/0b34012a-e76c-450b-97cd-806d449f7fa3" />
 
 
 
@@ -48,6 +49,7 @@ Created a Genie AT Agent using the gold layer tables as the source, and configur
 
 
 ## Project Folder
+
 
 
 

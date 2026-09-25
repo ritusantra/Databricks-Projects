@@ -64,7 +64,17 @@ This project implements a scalable **Ecommerce Orders Analytics Pipeline** using
 
 
 ## Project Folder
-
+```text
+Ecommerce_Orders_Analytics_Pipeline/
+│
+├── assets/                                    # Architecture, pipeline & dashboard screenshots
+│
+├── datasets/                                  # Source data
+│ 
+├── scripts/                                 # Databricks Spark Declarative Pipeline Scripts
+│   
+│
+└── README.md                                  # Project documentation
 
 
 

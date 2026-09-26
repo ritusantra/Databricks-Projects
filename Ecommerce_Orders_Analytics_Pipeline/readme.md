@@ -3,11 +3,12 @@
 ## Overview
 This project implements a scalable **Ecommerce Orders Analytics Pipeline** using the **Medallion Architecture** on **Databricks**. Databricks **Lakeflow Job** ingests raw CSV data from Volume Storage and progressively transforms it through Bronze, Silver, and Gold layers using **Spark Declarative Pipelines** on **Delta Lake**. Gold layer outputs are exposed to a **Dashboard** for reporting and to a **Genie AI Agent** for natural-language business insights, with all pipeline assets governed end-to-end under **Unity Catalog**.
 
-
+---
 
 ## Architecture 
 <img width="1212" height="531" alt="image" src="https://github.com/user-attachments/assets/0b34012a-e76c-450b-97cd-806d449f7fa3" />
 
+---
 
 ## Tech Stack
 * **Ingestion:** Databricks Auto Loader (cloudFiles)
@@ -16,10 +17,13 @@ This project implements a scalable **Ecommerce Orders Analytics Pipeline** using
 * **Governance:** Unity Catalog
 * **Consumption:** Databricks Dashboard, Genie AI Agent
 
+---
+
 ## Data Pipeline
 
 <img width="1399" height="254" alt="image" src="https://github.com/user-attachments/assets/97138bca-55a2-4b21-9f17-bfcd12dde9e4" />
 
+---
 
 ### Key Features
 * **Auto Loader for incremental ingestion** - new CSV files dropped into Volume Storage are automatically detected and processed without full reprocessing, using Auto Loader's `cloudFiles`
@@ -30,6 +34,7 @@ This project implements a scalable **Ecommerce Orders Analytics Pipeline** using
 * **Unity Catalog governance** - every table across Bronze, Silver, and Gold is registered in Unity Catalog, giving centralized access control, lineage, and discoverability across the whole job
 * **Genie AI Agent for self-serve insights** - business users can ask plain-language questions over the Gold layer without needing to write SQL
 * **Single orchestrated job** - the entire flow (ingestion through Gold) runs as one Databricks Lakeflow Job, simplifying scheduling, monitoring, and failure handling
+---
 
 ## Data Flow
  
@@ -62,6 +67,7 @@ This project implements a scalable **Ecommerce Orders Analytics Pipeline** using
 * This is the layer intended for direct consumption by BI tools and the Genie AI Agent - it should already be shaped for reporting (clean grain, business-friendly column names, key metrics/aggregates pre-computed where useful)
 <img width="959" height="560" alt="image" src="https://github.com/user-attachments/assets/7b94350e-a921-45cd-bc70-b28f87a9fa0e" />
 
+---
 
 ### Consumption
 * **Dashboard** - the Gold Materialized View is connected directly to a Databricks Dashboard for standard visual reporting and monitoring of key metrics
@@ -69,7 +75,7 @@ This project implements a scalable **Ecommerce Orders Analytics Pipeline** using
 <img width="1670" height="805" alt="image" src="https://github.com/user-attachments/assets/e4235e21-d156-4eb7-af6e-55e5feb62804" />
 <img width="1654" height="797" alt="image" src="https://github.com/user-attachments/assets/8600b62e-75be-4d7e-a022-cc145efe4de2" />
 
-
+---
 ### Governance
 * Unity Catalog governs every asset in the pipeline - Bronze, Silver, and Gold tables/views are all registered under it
 * This provides a single place for access control (who can query which layer), column/table-level lineage (tracing a Gold metric all the way back to the source CSV), and discoverability for other teams who want to build on top of these tables

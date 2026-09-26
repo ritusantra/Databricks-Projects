@@ -67,6 +67,8 @@ This project implements a scalable **Ecommerce Orders Analytics Pipeline** using
 * **Dashboard** - the Gold Materialized View is connected directly to a Databricks Dashboard for standard visual reporting and monitoring of key metrics
 * **Genie AI Agent** - the same Gold layer also powers a Genie AI Agent, which is configured to answer natural-language business questions (e.g. sales trends, customer/product breakdowns) directly against the Gold tables, without requiring the end user to write any SQL
 <img width="1670" height="805" alt="image" src="https://github.com/user-attachments/assets/e4235e21-d156-4eb7-af6e-55e5feb62804" />
+<img width="1654" height="797" alt="image" src="https://github.com/user-attachments/assets/8600b62e-75be-4d7e-a022-cc145efe4de2" />
+
 
 ### Governance
 * Unity Catalog governs every asset in the pipeline - Bronze, Silver, and Gold tables/views are all registered under it

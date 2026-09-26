@@ -17,6 +17,10 @@ This project implements a scalable **Ecommerce Orders Analytics Pipeline** using
 * **Consumption:** Databricks Dashboard, Genie AI Agent
 
 ## Data Pipeline
+
+<img width="1399" height="254" alt="image" src="https://github.com/user-attachments/assets/97138bca-55a2-4b21-9f17-bfcd12dde9e4" />
+
+
 ### Key Features
 * **Auto Loader for incremental ingestion** - new CSV files dropped into Volume Storage are automatically detected and processed without full reprocessing, using Auto Loader's `cloudFiles`
 * **Declarative pipeline orchestration** - Bronze, Silver, and Gold transformations are defined declaratively via Spark Declarative Pipelines, giving automatic dependency resolution, and lineage tracking
@@ -38,6 +42,7 @@ This project implements a scalable **Ecommerce Orders Analytics Pipeline** using
 * A Bronze schema/streaming table is created via Spark Declarative Pipelines to land the raw data coming out of Auto Loader
 * Data is written with minimal transformation, preserving the original structure, column names, and values from the source CSVs for full traceability back to the raw files
 * Because it is a streaming table, Bronze is continuously appended to as Auto Loader delivers new micro-batches, rather than being rebuilt on each run
+  <img width="507" height="541" alt="image" src="https://github.com/user-attachments/assets/fa2cc6d9-ed21-48bb-9c8f-cb1da6be777b" />
 
 ### Silver
 * A Silver streaming table is created from the Bronze streaming table using Spark Declarative Pipelines
@@ -48,15 +53,21 @@ This project implements a scalable **Ecommerce Orders Analytics Pipeline** using
   * Normalizing inconsistent data formats
 * Records that fail the data validation rules are quarantined instead of being dropped, so bad data is visible and auditable rather than silently lost
 * Processing remains incremental end-to-end, so only new/changed Bronze data is processed into Silver on each run
+<img width="825" height="570" alt="image" src="https://github.com/user-attachments/assets/f507080c-8fff-49e5-90b3-f57cc2698b59" />
+
 
 ### Gold
 * A Gold Materialized View is built by combining and aggregating Silver streaming tables into an analytics-ready dataset
 * Because it's a materialized view rather than a plain table, Databricks automatically keeps it up to date as the underlying Silver data changes, recomputing only what's needed
 * This is the layer intended for direct consumption by BI tools and the Genie AI Agent - it should already be shaped for reporting (clean grain, business-friendly column names, key metrics/aggregates pre-computed where useful)
+<img width="959" height="560" alt="image" src="https://github.com/user-attachments/assets/7b94350e-a921-45cd-bc70-b28f87a9fa0e" />
+
 
 ### Consumption
 * **Dashboard** - the Gold Materialized View is connected directly to a Databricks Dashboard for standard visual reporting and monitoring of key metrics
 * **Genie AI Agent** - the same Gold layer also powers a Genie AI Agent, which is configured to answer natural-language business questions (e.g. sales trends, customer/product breakdowns) directly against the Gold tables, without requiring the end user to write any SQL
+<img width="1670" height="805" alt="image" src="https://github.com/user-attachments/assets/e4235e21-d156-4eb7-af6e-55e5feb62804" />
+
 ### Governance
 * Unity Catalog governs every asset in the pipeline - Bronze, Silver, and Gold tables/views are all registered under it
 * This provides a single place for access control (who can query which layer), column/table-level lineage (tracing a Gold metric all the way back to the source CSV), and discoverability for other teams who want to build on top of these tables

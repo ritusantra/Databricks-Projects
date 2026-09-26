@@ -24,7 +24,7 @@ This project implements a scalable **Ecommerce Orders Analytics Pipeline** using
 ### Key Features
 * **Auto Loader for incremental ingestion** - new CSV files dropped into Volume Storage are automatically detected and processed without full reprocessing, using Auto Loader's `cloudFiles`
 * **Declarative pipeline orchestration** - Bronze, Silver, and Gold transformations are defined declaratively via Spark Declarative Pipelines, giving automatic dependency resolution, and lineage tracking
-* **Streaming-first design** - Bronze and Silver are implemented as streaming tables so data flows through the medallion layers continuously as new files arrive, instead of relying on scheduled batch runs
+* **Streaming-first design** - Bronze and Silver are implemented as streaming tables so data flows through the medallion layers continuously as new files arrive
 * **Quarantine of invalid records** - rows that fail data quality expectations at the Silver stage are routed to a quarantine path rather than silently dropped or allowed to corrupt downstream tables
 * **Materialized Gold layer** - the Gold layer is a materialized view, so it is automatically and efficiently refreshed whenever upstream Silver data changes, without needing a separate manual refresh job
 * **Unity Catalog governance** - every table across Bronze, Silver, and Gold is registered in Unity Catalog, giving centralized access control, lineage, and discoverability across the whole job
@@ -71,21 +71,7 @@ This project implements a scalable **Ecommerce Orders Analytics Pipeline** using
 ### Governance
 * Unity Catalog governs every asset in the pipeline - Bronze, Silver, and Gold tables/views are all registered under it
 * This provides a single place for access control (who can query which layer), column/table-level lineage (tracing a Gold metric all the way back to the source CSV), and discoverability for other teams who want to build on top of these tables
-* Running the whole thing as a single Databricks Lakeflow Job means scheduling, monitoring, retries, and alerting are all managed centrally rather than being spread across disconnected notebooks
 
-
-## Project Folder
-```text
-Ecommerce_Orders_Analytics_Pipeline/
-│
-├── assets/                                    # Architecture, pipeline & dashboard screenshots
-│
-├── datasets/                                  # Source data
-│ 
-├── scripts/                                 # Databricks Spark Declarative Pipeline Scripts
-│   
-│
-└── README.md                                  # Project documentation
 
 
 

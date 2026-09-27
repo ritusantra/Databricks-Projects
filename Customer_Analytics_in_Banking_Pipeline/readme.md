@@ -1,4 +1,4 @@
-# Customer Analytics in Banking Pipeline
+# Customer Analytics in Banking: End-to-End Customer Banking Data Pipeline Using Databricks
 
 ## Overview
 This project implements a modern, scalable data engineering and analytics platform on **Databricks**, designed to ingest, process, validate, govern, and visualize data. The solution uses **Databricks Auto Loader** for incremental file ingestion, **Spark Declarative Pipelines** for declarative data processing, and **Delta Lake** to maintain reliable Landing, Bronze, Silver, and Gold data layers.
